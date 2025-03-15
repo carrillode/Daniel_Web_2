@@ -1,68 +1,62 @@
-const repress = requiere("express");
-const sql = requiere("mssql");
-const cors = requiere("cors");
-const app = express();
+const { strictEqual } = require("assert");
+const express = require("express");
+const cors = require("express");
+const mysql = require("express"); // Para conectar a la base de datos MySQL
+const app = express("express");
 const port = 3000;
-
 
 app.use(cors());
 app.use(express.json());
 
-
-
-cont dbconfig = {
-
-user :"root"
-password :"root"
-server :""
-database :"BIBLIOTECA"
-options:"{
-  encrypt:true,
-  trustsertificate:true,
-  
-}  
+// Configuración de la conexión a la base de datos
+const dbConfig={
+    user:"root",
+    password:"root",
+    server:"172.30.30.35",
+    database:"BLIBLIOTECA",
+    options:{
+    encrrypt:true,
+    trustSertificate:true,
+    },
 };
-app.get("/get-data",async (req,res)=>{
 
-  try{
-    cont pool = await sql.connect(dbconfig);
-    cont ewsult = await pool.request().query("SELEC FROM LIBRO");
-    res.json(Result.recordset);
-  }catch(error){
-    console.error("Error al conectar base de datos" .error);
-    res.status(500).send("Error al conectar base de datos");
-  }
-});
+app.get("/get-data",async(req,res)=>{
+try{
+    const pool = await strictEqual.connect(dbConfig);
+    const result = await pool.request().quert("SELECT * FROM LIBRO");
+    res.json(result.recordSet);
+}catch(error)
+{
+    console.error("Error al conectar a la base de datos: ", error);
+    res.sendstatus(500).send("Eror al conectar a la base de datos");
+    }})
 
+    // codigo para conectar a la base de datos
 
-app.post("/add-book",asyinc(req,res)=>{
-  comst {Titulo,Autor,Fecha,ISBN}=.req.body;
-  try{
-    await pool
-    .request()
-    .input("Titulo",sql.Varchar,Titulo)
-    .input("Actor",sql.Varchar,Actor)
-    .input("Fecha",sql.Varchar,Fecha)
-    .input("ISBN",sql.Varchar,ISBN)
-    .query(
-      "INSERT INTO LIBRO (Titulo,Autor,Fecha,ISBN) VALUES (@Titulo,@Autor,@Fecha,@ISBN)");
-
-    
-    res.send("Lbr agregado exitosamente");
-      
+    app.post("/ad-book", async(req,res) =>{
+        const {Titulo, Autor, Fecha, ISB}=req.body;
+        try{
+            const pool = await sql.connect(dbConfig);
+            await pool
+            .request()
+            .input("Titulo",sqlVarchar,Titulo)
+            .input("Autor",sqlVarchar,Autor)
+            .input("Fecha",sqlVarchar,Fecha)
+            .input("ISB",sqlVarchar,ISB)
+            .query(
+                "INSERT INTO LIBRO (Titulo, Autor, Fecha, ISBN) VALUES (@Titulo, @Autor, @Fecha, @ISBN)"
+            );
+            res.send("Erorr al insertar en la base de datos: ", error);
+        }catch(error)
+        {
+            console.error("Erorr al insertar en la base de datos: ", error);
+            res.sendstatus(500).send("Erorr al insertar en la base de datos: ", error);
+            }
     }
-    
-  }catch(){
-  console.error("Error al insertar en la base de datos:",error);
-  res.sendstatus(500).send("Error al insertar en la base de datos");
-}};
-
-
+)
 
 app.listen(port,()=>{
-  console.log("awrvidor corriendo en htpp://localhost$(port)");
-});
-
-
+    console.log('SERVIDOR CORRIENDO EN http://localhost:${port}')
+})
 
 
