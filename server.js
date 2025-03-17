@@ -1,14 +1,14 @@
 const { strictEqual } = require("assert");
 const express = require("express");
 const cors = require("express");
-const mysql = require("express"); // Para conectar a la base de datos MySQL
+const mysql = require("express"); 
 const app = express("express");
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Configuración de la conexión a la base de datos
+
 const dbConfig={
     user:"root",
     password:"root",
@@ -17,7 +17,7 @@ const dbConfig={
     options:{
     encrrypt:true,
     trustSertificate:true,
-    },
+    }
 };
 
 app.get("/get-data",async(req,res)=>{
