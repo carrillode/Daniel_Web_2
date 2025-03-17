@@ -17,7 +17,7 @@ const dbConfig={
     options:{
     encrrypt:true,
     trustSertificate:true,
-    }
+    },
 };
 
 app.get("/get-data",async(req,res)=>{
@@ -53,10 +53,10 @@ try{
             res.sendstatus(500).send("Erorr al insertar en la base de datos: ", error);
             }
     }
-)
+);
 
 app.listen(port,()=>{
     console.log('SERVIDOR CORRIENDO EN http://localhost:${port}')
-})
+});
 
 
